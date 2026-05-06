@@ -1,0 +1,29 @@
+# Models (학습된 모델 가중치 폴더 및 파일)
+models/
+*.pt
+*.onnx
+
+# Python Cache & Virtual Environment
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+env.bak/
+venv.bak/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE (VSCode, PyCharm 등 설정 파일)
+.vscode/
+.idea/

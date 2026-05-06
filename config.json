@@ -1,0 +1,24 @@
+{
+  "model": {
+    "primary_arch": "yolov8s.pt",
+    "fallback_arch": "yolov8n.pt",
+    "inference_time_limit_sec": 0.1
+  },
+  "data": {
+    "dataset_root": "./dataset",
+    "num_classes": 8,
+    "classes": [
+      "box", "coated_paper", "normal_vinyl", "clear_vinyl",
+      "disposable_plastic", "clear_plastic", "pet", "styrofoam"
+    ]
+  },
+  "paths": {
+    "save_dir": "./models"
+  },
+  "training": {
+    "epochs": 1,
+    "batch": 1,
+    "imgsz": 640,
+    "device": 0
+  }
+}
