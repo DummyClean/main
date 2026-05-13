@@ -1,24 +1,54 @@
 {
-  "model": {
-    "primary_arch": "yolov8s.pt",
-    "fallback_arch": "yolov8n.pt",
-    "inference_time_limit_sec": 0.1
-  },
-  "data": {
-    "dataset_root": "./dataset",
-    "num_classes": 8,
-    "classes": [
-      "box", "coated_paper", "normal_vinyl", "clear_vinyl",
-      "disposable_plastic", "clear_plastic", "pet", "styrofoam"
-    ]
-  },
-  "paths": {
-    "save_dir": "./models"
-  },
-  "training": {
-    "epochs": 1,
-    "batch": 1,
-    "imgsz": 640,
-    "device": 0
-  }
+    "model": {
+        "default_model": "yolov8s.pt",
+        "fallback_model": "yolov8n.pt",
+        "inference_threshold_sec": 0.1,
+        "conf_threshold": 0.25,
+        "imgsz": 640,
+        "task": "detect"
+    },
+    "paths": {
+        "save_dir": "results"
+    },
+    "data": {
+        "raw_dir": "dataset",
+        "processed_dir": "data",
+        "train_path": "data/train/images",
+        "val_path": "data/val/images",
+        "classes": [
+            "box",
+            "coated_paper",
+            "normal_vinyl",
+            "clear_vinyl",
+            "disposable_plastic",
+            "clear_plastic",
+            "pet",
+            "styrofoam"
+        ]
+    },
+    "training": {
+        "epochs": 100,
+        "imgsz": 640,
+        "batch": 16,
+        "workers": 4,
+        "lr0": 0.01,
+        "lrf": 0.01,
+        "warmup_epochs": 3,
+        "degrees": 45.0,
+        "fliplr": 0.5,
+        "flipud": 0.1,
+        "scale": 0.5,
+        "mosaic": 1.0,
+        "mixup": 0.1,
+        "hsv_v": 0.4,
+        "hsv_s": 0.7,
+        "hsv_h": 0.015,
+        "translate": 0.1,
+        "shear": 2.0,
+        "copy_paste": 0.1
+    },
+    "output": {
+        "save_results": true,
+        "result_dir": "results"
+    }
 }
