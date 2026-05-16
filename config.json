@@ -27,14 +27,14 @@
         ]
     },
     "training": {
-        "epochs": 100,
+        "epochs": 10,
         "imgsz": 640,
-        "batch": 16,
-        "workers": 4,
+        "batch": 96,
+        "workers": 8,
         "lr0": 0.01,
         "lrf": 0.01,
         "warmup_epochs": 3,
-        "degrees": 45.0,
+        "degrees": 10.0,
         "fliplr": 0.5,
         "flipud": 0.1,
         "scale": 0.5,

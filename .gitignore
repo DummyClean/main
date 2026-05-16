@@ -1,3 +1,6 @@
+# Data
+/dataset
+
 # Models (학습된 모델 가중치 폴더 및 파일)
 models/
 *.pt

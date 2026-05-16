@@ -5,6 +5,7 @@ import shutil
 import time
 from ultralytics import YOLO
 from preprocess import organize_dataset
+from pathlib import Path
 
 
 def load_config(config_path):
@@ -14,9 +15,10 @@ def load_config(config_path):
 
 def setup_train(config):
     # 1. 경로 및 모델 아키텍처 로드
+    current_dir = Path(__file__).resolve().parent
     model_arch     = config["model"]["default_model"]
     save_dir       = config["paths"]["save_dir"]
-    data_yaml_path = "./data.yaml"
+    data_yaml_path = current_dir / "data.yaml"
 
     # 2. 훈련 파라미터 병합 config["training"]
     train_args = {
