@@ -18,6 +18,9 @@ YOLOv8을 활용한 8종 객체 탐지 및 분류 파이프라인입니다.
 `labelimg` 툴을 이용하여 깃허브 양식에 맞춰 라벨당 125장씩 직접 라벨링을 진행하였습니다.
 데이터는 YOLO 포맷을 따르며, `train`과 `val` 데이터셋으로 구분되어 관리됩니다.
 
+데이터셋 다운로드 링크
+https://drive.google.com/file/d/1l3bJSyOZgWrM8TmZKb0LyUbEnL126-L_/view?usp=sharing
+
 ### 클래스 구성 (8 Classes)
 1. `box` (박스)
 2. `coated_paper` (코팅지)

@@ -4,7 +4,8 @@ import os
 import time
 import warnings
 import torch
-from ultralytics import YOLO  
+from ultralytics import YOLO
+from pathlib import Path
 
 
 def load_config(config_path):
@@ -13,10 +14,10 @@ def load_config(config_path):
 
 
 def setup_test(config):
+    current_dir = Path(__file__).resolve().parent
     inference_limit = config["model"]["inference_time_limit_sec"]
     save_dir = config["paths"]["save_dir"]
-    dataset_root = config["data"]["dataset_root"]
-    trained_weights = os.path.join(save_dir, "weights", "best.pt")
+    trained_weights = os.path.join(save_dir, "best.pt")
 
     print(f"--- 테스트 환경 설정 완료 ---")
     print(f"테스트 가중치: {trained_weights}")
@@ -33,7 +34,7 @@ def setup_test(config):
     print(f" 디바이스: {device}")
 
     # 2. 모델 평가: 검증 데이터셋에 대한 평가 지표(mAP50등)를 콘솔에 출력
-    val_data = config["data"].get("val_yaml", os.path.join(dataset_root, "data.yaml"))
+    val_data = config["data"].get("val_yaml", os.path.join(current_dir, "data.yaml"))
     print(f"\n[2/4] 검증 데이터셋 평가 중: {val_data}")
     results = model.val(data=val_data, verbose=True)
 
@@ -45,13 +46,16 @@ def setup_test(config):
     # 3 & 4. 추론 시간 측정 로직과 장당 평균 추론 시간을 계산
     print(f"\n[3/4] 추론 시간 측정 중 ...")
     val_img_dir = config["data"].get(
-        "val_img_dir", os.path.join(dataset_root, "images", "val")
+        "val_img_dir", config["data"]["val_path"]
     )
 
+    # val_img_dir가 문자열이라면 Path 객체로 변환합니다.
+    val_path = Path(val_img_dir)
+    valid_extensions = {".jpg", ".jpeg", ".png", ".bmp"}
+
     image_paths = [
-        os.path.join(val_img_dir, f)
-        for f in os.listdir(val_img_dir)
-        if f.lower().endswith((".jpg", ".jpeg", ".png", ".bmp"))
+        str(p) for p in val_path.rglob("*")
+        if p.is_file() and p.suffix.lower() in valid_extensions
     ]
 
     if not image_paths:
