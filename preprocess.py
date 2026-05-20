@@ -5,14 +5,12 @@ import re
 def organize_dataset(raw_data_dir='dataset', target_dir='data'):
     """
     원본 클래스별 폴더 구조를 YOLOv8 표준 구조(train/val)로 분류
-    - number <= 105: train
-    - number > 105: val
     """
     classes = ['box', 'coated_paper', 'normal_vinyl', 'clear_vinyl', 
                'disposable_plastic', 'clear_plastic', 'pet', 'styrofoam']
     
     # 대상 디렉토리 생성
-    for split in ['train', 'val']:
+    for split in ['train', 'val', 'test']:
         for sub in ['images', 'labels']:
             os.makedirs(os.path.join(target_dir, split, sub), exist_ok=True)
 
@@ -32,7 +30,12 @@ def organize_dataset(raw_data_dir='dataset', target_dir='data'):
                 continue
             
             num = int(match.group(1))
-            target_split = 'train' if num <= 105 else 'val'
+            if num <= 100:
+                target_split = 'train'
+            elif num <= 112:
+                target_split = 'val'
+            else:
+                target_split = 'test'
             
             # 확장자에 따라 images/labels 분류
             if file.endswith(('.jpg', '.jpeg', '.png')):

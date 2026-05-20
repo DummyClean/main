@@ -56,18 +56,19 @@ def setup_train(config):
         best_path = os.path.join(save_dir, "best.pt")
         if not os.path.exists(best_path):
             print("best.pt 찾을 수 없음")
-        else:
-            inf_time = _measure_inference(os.path.join(save_dir, "best.pt"), val_img, config["model"])
+            return
+        
+        inf_time = _measure_inference(os.path.join(save_dir, "best.pt"), val_img, config["model"])
 
-        if inf_time > config["model"]["inference_threshold_sec"]:
-            print(f"추론 시간 {inf_time:.4f}s > 기준 {config['model']['inference_threshold_sec']}s")
+        if inf_time > config["model"]["inference_time_limit_sec"]:
+            print(f"추론 시간 {inf_time:.4f}s > 기준 {config['model']['inference_time_limit_sec']}s")
             print(f"Fallback 모델({config['model']['fallback_model']})로 재훈련을 시작합니다.")
             fallback_args         = dict(train_args)
             fallback_args["name"] = "fallback"
             model = _train_model(config["model"]["fallback_model"], fallback_args)
             _copy_best(model.trainer.save_dir, save_dir)
         else:
-            print(f"추론 시간 {inf_time:.4f}s ≤ 기준 {config['model']['inference_threshold_sec']}s — {model_arch} 유지")
+            print(f"추론 시간 {inf_time:.4f}s ≤ 기준 {config['model']['inference_time_limit_sec']}s — {model_arch} 유지")
     else:
         print("val 이미지를 찾을 수 없어 속도 체크를 건너뜁니다.")
 
@@ -122,10 +123,15 @@ def _measure_inference(model_path: str, img_path: str, model_cfg: dict) -> float
     """best.pt 로 이미지 한 장 추론 후 소요 시간(초) 반환"""
     print(f"추론 속도 측정 중: {model_path}")
     m     = YOLO(model_path)
-    start = time.time()
-    m.predict(img_path, imgsz=model_cfg["imgsz"],
-              conf=model_cfg["conf_threshold"], verbose=False)
-    return time.time() - start
+
+    #첫 사진 오버헤드 방지용 워밍업
+    m.predict(img_path, imgsz=model_cfg["imgsz"], verbose=False)
+
+    results = m.predict(img_path, imgsz=model_cfg["imgsz"],
+                       conf=model_cfg["conf_threshold"], verbose=False)
+    
+    inference_time = results[0].speed['inference'] / 1000.0
+    return inference_time
 
 
 def _copy_best(run_dir: str, save_dir: str): # 결과물 저장

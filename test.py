@@ -37,7 +37,7 @@ def setup_test(config):
     print(f" 디바이스: {device}")
 
     print(f"\n[2/3] GPU 워밍업 중 ")
-    warmup_source = config["data"].get("val_img_dir", config["data"].get("val_path"))
+    warmup_source = config["data"].get("val_img_dir", config["data"]["val_path"])
 
     if warmup_source:
         warmup_path = Path(warmup_source)
@@ -67,11 +67,11 @@ def setup_test(config):
     else:
         print(" 워밍업 이미지 경로가 없어 건너뜁니다.")
 
-    val_data = config["data"].get("val_yaml", os.path.join(current_dir, "data.yaml"))
+    test_data = config["data"].get("val_yaml", os.path.join(current_dir, "data.yaml"))
     
-    print(f"\n[3/3] 검증 데이터셋 평가 및 속도 측정 중: {val_data}")
+    print(f"\n[3/3] 검증 데이터셋 평가 및 속도 측정 중: {test_data}")
 
-    results = model.val(data=val_data, verbose=True)
+    results = model.val(data=test_data, split = 'test' ,verbose=True)
 
     metrics = results.results_dict
     print("\n === 평가 지표 ===")

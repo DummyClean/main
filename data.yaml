@@ -1,5 +1,6 @@
-train: ./dataset/train/images
-val: ./dataset/val/images
+train: ./data/train/images
+test: ./data/test/images
+val: ./data/val/images
 
 nc: 8
 names: ['box','coated_paper','normal_vinyl','clear_vinyl','disposable_plastic','clear_plastic','pet','styrofoam']
