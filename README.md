@@ -15,8 +15,8 @@ YOLOv8을 활용한 8종 객체 탐지 및 분류 파이프라인입니다.
 - **환경 설정** : `config.json` 파일을 통해 모델 파라미터 및 경로 등을 통합 관리합니다.
 
 ## 데이터셋 (Dataset)
-`labelimg` 툴을 이용하여 깃허브 양식에 맞춰 라벨당 125장씩 직접 라벨링을 진행하였습니다.
-데이터는 YOLO 포맷을 따르며, `train`과 `val` 데이터셋으로 구분되어 관리됩니다.
+`labelimg` 툴을 이용하여 라벨당 125장씩 라벨링을 진행하였습니다.
+데이터는 YOLO 포맷을 따르며, `train`, `test`, `val` 데이터셋으로 구분되어 관리됩니다.
 
 데이터셋 다운로드 링크
 https://drive.google.com/file/d/1l3bJSyOZgWrM8TmZKb0LyUbEnL126-L_/view?usp=sharing
@@ -31,10 +31,11 @@ https://drive.google.com/file/d/1l3bJSyOZgWrM8TmZKb0LyUbEnL126-L_/view?usp=shari
 7. `pet` (페트병)
 8. `styrofoam` (스티로폼)
 
-## 시작하기 (Getting Started)
-
-### 1. 환경 설정 및 요구사항 설치
+## 환경 설정 및 요구사항 설치
 프로젝트에 필요한 모든 패키지 및 라이브러리는 `requirements.txt`에 명시되어 있습니다.
 ```bash
 pip install -r requirements.txt
 ```
+
+## 파라미터 튜닝 기록
+https://docs.google.com/spreadsheets/d/1v333uxaEcliwWmrqhNiyWYiNTAY7rs_BWYICTLtC6vM/edit?usp=sharing
