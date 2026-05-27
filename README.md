@@ -36,6 +36,7 @@ https://drive.google.com/file/d/1l3bJSyOZgWrM8TmZKb0LyUbEnL126-L_/view?usp=shari
 ```bash
 pip install -r requirements.txt
 ```
+```open_cv_test.py``` 는 본인 휴대폰에 IP Wepcam 앱 실행 후 IP 입력을 해줘야합니다
 
 ## 파라미터 튜닝 기록
 https://docs.google.com/spreadsheets/d/1v333uxaEcliwWmrqhNiyWYiNTAY7rs_BWYICTLtC6vM/edit?usp=sharing
